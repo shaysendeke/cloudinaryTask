@@ -1,23 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import Pics from './components/Pics';
+import { useState } from 'react';
+import PhotosByTag from './components/PhotosByTag';
+import Tags from './components/Tags';
 
 function App() {
+  const [photos, setPhotos] = useState([]);
+  const [taggedPhotos, setTaggedPhotos] = useState([]);
+  const [tags, setTags] = useState();
+  const [currentPhoto, setCurrentPhoto] = useState("");
+  const [currentTag, setCurrentTag] = useState("");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Tags
+      tags={tags} setTags={setTags}
+      ></Tags>
+      <Pics></Pics>
+      <PhotosByTag></PhotosByTag>
     </div>
   );
 }
