@@ -1,16 +1,17 @@
 import {useState} from 'react'
 import { randomColor } from "randomcolor";
+import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
 import './tags.css'
 
-export default function Tags({tags, setTags, photos, setPhotos, currentPhoto, SetCurrentPhoto, taggedPhotos, setTaggedPhotos, currentTag, setCurrentTag
-}) {
+export default function Tags({tags, setTags, photos, setPhotos, currentPhoto, setCurrentPhoto, taggedPhotos, setTaggedPhotos, currentTag, setCurrentTag
+,pics}) {
     const [newTag, setNewTag] = useState("");
     const addNewTag = (tagName) => {
-        if (tags.some((tag) => tag.label === tagName) || !tagName) {
+        if (tags.some((tag) => tag.title === tagName) || !tagName) {
           console.log("error");
           return;
         }
-        const tagObj = { label: newTag, color: randomColor() };
+        const tagObj = { title: newTag, color: randomColor() };
         setTags([...tags, tagObj]);
         setNewTag("");
       };
@@ -23,16 +24,26 @@ export default function Tags({tags, setTags, photos, setPhotos, currentPhoto, Se
       const editTagName = (tagName) => {};
 
       const deleteTag = (tagName) => {
-        const temp = [...tags].filter((tag) => tag.label !== tagName);
+        const temp = [...tags].filter((tag) => tag.title !== tagName);
         setTags(temp);
       };
 
       const tagPhoto = (tagName) => {
-        currentPhoto.tag = tagName.label;
-        const temp = [...photos].filter((photo) => photo.id !== currentPhoto.id);
-        setTaggedPhotos([...taggedPhotos, currentPhoto]);
-        setPhotos(temp);
-        // setCurrentPhoto("");
+        
+        //currentPhoto.tag = tagName.title;
+        const temp = [...pics].filter((photo) => photo.id === currentPhoto);
+        if(taggedPhotos[tagName.title]){
+            taggedPhotos[tagName.title].photos.push(temp[0])
+        }
+        else{
+            taggedPhotos[tagName.title] = {};
+            taggedPhotos[tagName.title].photos= [];
+            taggedPhotos[tagName.title].photos.push(temp[0])
+        }
+        console.log(taggedPhotos);
+        setTaggedPhotos(taggedPhotos);
+        //setPhotos(temp);
+        setCurrentPhoto("");
         setCurrentTag("");
       };
     
@@ -73,21 +84,21 @@ export default function Tags({tags, setTags, photos, setPhotos, currentPhoto, Se
               onClick={() => setCurrentTag(tag)}
               onDoubleClick={() => setCurrentTag("")}
             >
-              {tag.label}
-              {/* <span>
+              {tag.title}
+              <span>
                 {
                   <AiOutlineEdit
                     title="Rename"
-                    onClick={() => editTagName(tag.label)}
+                    onClick={() => editTagName(tag.title)}
                   />
                 }
                 {
                   <AiFillDelete
                     title="Delete"
-                    onClick={() => deleteTag(tag.label)}
+                    onClick={() => deleteTag(tag.title)}
                   />
                 }
-              </span> */}
+              </span>
             </li>
             /*: <input type="text" value={tag.label}/>*/
             /*: <input type="text" value={tag.label}/>*/
@@ -96,7 +107,8 @@ export default function Tags({tags, setTags, photos, setPhotos, currentPhoto, Se
             /*: <input type="text" value={tag.label}/>*/
            /*: <input type="text" value={tag.label}/>*/);
         })}
-        {currentTag && currentPhoto ? (
+      {currentPhoto}
+        {currentTag && currentPhoto ? 
           <button
             onClick={() => {
               tagPhoto(currentTag);
@@ -104,7 +116,7 @@ export default function Tags({tags, setTags, photos, setPhotos, currentPhoto, Se
           >
             Apply
           </button>
-        ) : null}
+         : null} 
       </div>
 
     </div>
