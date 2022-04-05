@@ -1,0 +1,27 @@
+.TagsListForm {
+    width: 30%;
+    height: 70vh;
+    border: 1px solid black;
+  }
+  
+  .TagsListForm form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .TagsListForm input {
+    margin-top: 5px;
+    width: 70%;
+  }
+  .TagsList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 90%;
+    height: auto;
+    border: 1px solid black;
+    margin: 10px 0px 0px 5px;
+    overflow: auto;
+  }
+    
